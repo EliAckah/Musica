@@ -78,20 +78,6 @@ background: var(--primary-gradient);
 border-radius: 5px;
 }
 
-.parallel-lines {
-display: flex;
-flex-wrap: wrap;
-row-gap: 6px;
-padding: 0 5px;
-}
-
-.parallel-lines > div {
-height: 2px;
-width: 100%;
-min-width: 75px;
-background: var(--highlight-gradient);
-}
-
 .musica-title,
 .playlist-title {
 color: #fff;

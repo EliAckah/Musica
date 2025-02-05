@@ -82,4 +82,5 @@ const allSongs = [
     },
 ];
 
-console.log(allSongs)
+// declare audio variable
+const audio = new Audio();

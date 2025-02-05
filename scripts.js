@@ -89,6 +89,30 @@ let userData = {
     songs: [...allSongs],
     currentSong: null,
     songCurrentTime: 0,
+};
+
+//function to play the song
+const playSong = (id) => {
+    const song = userData?.songs.find((song) => song.id === id);
+    audio.src = song.src;
+    audio.title = song.title;
+
+    if (userData?.currentSong === null || userData?.currentSong.id !== song.id) {
+        audio.currentTime = 0;
+    } else {
+        audio.currentTime = userData?.songCurrentTime;
+    }
+    userData.currentSong = song;
+    playButton.classList.add("playing");
+
+    audio.play();
+};
+
+// function to pause the song
+const pauseSong = () => {
+    userData.songCurrentTime = audio.currentTime;
+    playButton.classList.remove("playing");
+    audio.pause();
 }
 
 // function to render the playlist
@@ -97,7 +121,7 @@ const renderSongs = (array) => {
         .map((song) => {
             return `
         <li id="song-${song.id}" class="playlist-song">
-        <button class="playlist-song-info">
+        <button onclick = "playSong(${song.id})" class="playlist-song-info">
             <span class="playlist-song-title">${song.title}</span>
             <span class="playlist-song-artist">${song.artist}</span>
             <span class="playlist-song-duration">${song.duration}</span>
@@ -114,6 +138,14 @@ const renderSongs = (array) => {
     playlistSongs.innerHTML = songsHTML;
 };
 
+// add event listener to play the song
+playButton.addEventListener("click", () => {
+    if (userData?.currentSong === null) {
+        playSong(userData?.songs[0].id)
+    } else {
+        playSong(userData?.currentSong.id);
+    }
+})
 
 // function to sort songs
 const sortSongs = () => {
@@ -131,26 +163,3 @@ const sortSongs = () => {
 
 //render songs
 renderSongs(sortSongs());
-
-// function to play a song
-const playSong = (id) => {
-    const song = userData?.songs.find((song) => song.id === id)
-    audio.src = song.src;
-    audio.title = song.title;
-
-    // update the current song and song current time
-    if (userData?.currentSong === null || userData?.currentSong.id !== song.id) {
-        audio.currentTime = 0;
-    } else {
-        audio.currentTime = userData?.songCurrentTime;
-    }
-
-    userData.currentSong = song;
-    playButton.classList.add("playing")
-    audio.play();
-}
-
-// add event listener to play the song
-playButton.addEventListener("click", () => {
-
-})

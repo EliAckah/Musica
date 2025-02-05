@@ -113,6 +113,28 @@ const pauseSong = () => {
     userData.songCurrentTime = audio.currentTime;
     playButton.classList.remove("playing");
     audio.pause();
+};
+
+// function to play the next song
+const playNextSong = () => {
+    if (userData?.currentSong === null) {
+        playSong(userData?.songs[0].id)
+    } else {
+        const currentSongIndex = getCurrentSongIndex();
+        const nextSong = userData?.songs[currentSongIndex + 1];
+        playSong(nextSong.id);
+    }
+};
+
+// function to play the previous song
+const playPreviousSong = () => {
+    if (userData?.currentSong === null) {
+        return;
+    } else {
+        const currentSongIndex = getCurrentSongIndex();
+        const previousSong = userData?.songs[currentSongIndex - 1];
+        playSong(previousSong.id);
+    }
 }
 
 // function to render the playlist
@@ -138,6 +160,12 @@ const renderSongs = (array) => {
     playlistSongs.innerHTML = songsHTML;
 };
 
+// function to get current song index in the playlist
+const getCurrentSongIndex = () => {
+    return userData?.songs.indexOf(userData?.currentSong);
+
+}
+
 // add event listener to play the song
 playButton.addEventListener("click", () => {
     if (userData?.currentSong === null) {
@@ -146,6 +174,12 @@ playButton.addEventListener("click", () => {
         playSong(userData?.currentSong.id);
     }
 })
+
+// add event listener to pause the song
+pauseButton.addEventListener("click", pauseSong);
+
+// add event listener to play the next song
+nextButton.addEventListener("click", playNextSong);
 
 // function to sort songs
 const sortSongs = () => {
@@ -163,3 +197,4 @@ const sortSongs = () => {
 
 //render songs
 renderSongs(sortSongs());
+

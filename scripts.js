@@ -114,10 +114,25 @@ const renderSongs = (array) => {
     playlistSongs.innerHTML = songsHTML;
 };
 
-//render songs
-renderSongs(userData?.songs);
 
 // function to sort songs
 const sortSongs = () => {
-    userData?.songs.sort();
+    userData?.songs.sort((a, b) => {
+        if (a.title < b.title) {
+            return -1
+        }
+        if (a.title > b.title) {
+            return 1
+        }
+        return 0;
+    });
+    return userData?.songs;
 };
+
+//render songs
+renderSongs(sortSongs());
+
+// function to play a song
+const playSong = (id) => {
+
+} 

@@ -1,5 +1,4 @@
 // access some elements
-
 const playlistSongs = document.getElementById('playlist-songs');
 const playButton = document.getElementById('play');
 const pauseButton = document.getElementById('pause');
@@ -8,7 +7,6 @@ const previousButton = document.getElementById('previous');
 const shuffleButton = document.getElementById('shuffle')
 
 // create an array of songs
-
 const allSongs = [
     {
         id: 0,
@@ -84,3 +82,13 @@ const allSongs = [
 
 // declare audio variable
 const audio = new Audio();
+
+// object to keep track of current song and the time
+let userData = {
+    // spread of all songs(copy of the original array)
+    songs: [...allSongs],
+    currentSong: null,
+    songCurrentTime: 0,
+}
+
+

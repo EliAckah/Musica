@@ -134,5 +134,23 @@ renderSongs(sortSongs());
 
 // function to play a song
 const playSong = (id) => {
+    const song = userData?.songs.find((song) => song.id === id)
+    audio.src = song.src;
+    audio.title = song.title;
 
-} 
+    // update the current song and song current time
+    if (userData?.currentSong === null || userData?.currentSong.id !== song.id) {
+        audio.currentTime = 0;
+    } else {
+        audio.currentTime = userData?.songCurrentTime;
+    }
+
+    userData.currentSong = song;
+    playButton.classList.add("playing")
+    audio.play();
+}
+
+// add event listener to play the song
+playButton.addEventListener("click", () => {
+
+})

@@ -107,6 +107,7 @@ const playSong = (id) => {
 
     highlightCurrentSong()
 
+    setPlayerDisplay();
 
     audio.play();
 };
@@ -145,6 +146,18 @@ const playPreviousSong = () => {
         playSong(previousSong.id);
     }
 }
+
+// function to display the song details in the player
+const setPlayerDisplay = () => {
+    const playingSong = document.getElementById('player-song-title');
+    const songArtist = document.getElementById('player-song-artist');
+    const currentTitle = userData?.currentSong?.title;
+    const currentArtist = userData?.currentSong?.artist;
+
+    playingSong.textContent = currentTitle ? currentTitle : "";
+    songArtist.textContent = currentArtist ? currentArtist : "";
+
+};
 
 // highlight the current song in the playlist
 const highlightCurrentSong = () => {

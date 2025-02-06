@@ -105,6 +105,9 @@ const playSong = (id) => {
     userData.currentSong = song;
     playButton.classList.add("playing");
 
+    highlightCurrentSong()
+
+
     audio.play();
 };
 
@@ -119,7 +122,11 @@ const pauseSong = () => {
 const playNextSong = () => {
     if (userData?.currentSong === null) {
         playSong(userData?.songs[0].id)
-    } else {
+    }
+    else if (getCurrentSongIndex() === userData?.songs.length - 1) {
+        playSong(userData?.songs[0].id)
+    }
+    else {
         const currentSongIndex = getCurrentSongIndex();
         const nextSong = userData?.songs[currentSongIndex + 1];
         playSong(nextSong.id);
@@ -128,12 +135,28 @@ const playNextSong = () => {
 
 // function to play the previous song
 const playPreviousSong = () => {
-    if (userData?.currentSong === null) {
-        return;
-    } else {
+    if (userData?.currentSong === null) return;
+    else if (getCurrentSongIndex() === 0) {
+        playSong(userData?.songs[userData?.songs.length - 1].id) // go to the last song
+    }
+    else {
         const currentSongIndex = getCurrentSongIndex();
         const previousSong = userData?.songs[currentSongIndex - 1];
         playSong(previousSong.id);
+    }
+}
+
+// highlight the current song in the playlist
+const highlightCurrentSong = () => {
+    const playlistSongElements = document.querySelectorAll('.playlist-song');
+    const songToHighlight = document.getElementById(`song-${userData?.currentSong?.id}`);
+
+    playlistSongElements.forEach((songEl) => {
+        songEl.removeAttribute("aria-current");
+    });
+
+    if (songToHighlight) {
+        songToHighlight.setAttribute("aria-current", "true")
     }
 }
 
@@ -181,6 +204,9 @@ pauseButton.addEventListener("click", pauseSong);
 // add event listener to play the next song
 nextButton.addEventListener("click", playNextSong);
 
+// add event listener to play the previous song
+previousButton.addEventListener("click", playPreviousSong)
+
 // function to sort songs
 const sortSongs = () => {
     userData?.songs.sort((a, b) => {
@@ -197,4 +223,5 @@ const sortSongs = () => {
 
 //render songs
 renderSongs(sortSongs());
+
 

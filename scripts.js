@@ -105,9 +105,11 @@ const playSong = (id) => {
     userData.currentSong = song;
     playButton.classList.add("playing");
 
-    highlightCurrentSong()
+    highlightCurrentSong();
 
     setPlayerDisplay();
+
+    setPlayButtonAccessibleText();
 
     audio.play();
 };
@@ -195,6 +197,12 @@ const renderSongs = (array) => {
 
     playlistSongs.innerHTML = songsHTML;
 };
+
+// make play button accessible
+const setPlayButtonAccessibleText = () => {
+    const song = userData?.currentSong || userData?.songs[0];
+    playButton.setAttribute("aria-label", song?.title ? `Play ${song.title}` : "Play");
+}
 
 // function to get current song index in the playlist
 const getCurrentSongIndex = () => {

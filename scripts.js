@@ -149,6 +149,17 @@ const playPreviousSong = () => {
     }
 }
 
+// function to shuffle the playlist
+const shuffle = () => {
+    userData?.songs.sort(() => Math.random() - 0.5);
+    userData.currentSong = null;
+    userData.songCurrentTime = 0;
+    renderSongs(userData?.songs);
+    pauseSong();
+    setPlayerDisplay();
+    setPlayButtonAccessibleText();
+};
+
 // function to display the song details in the player
 const setPlayerDisplay = () => {
     const playingSong = document.getElementById('player-song-title');

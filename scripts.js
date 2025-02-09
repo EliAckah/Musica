@@ -173,6 +173,23 @@ const deleteSong = (id) => {
     renderSongs(userData?.songs);
     highlightCurrentSong();
     setPlayButtonAccessibleText();
+
+    if (userData?.songs.length === 0) {
+        const resetButton = document.createElement("button");
+        const resetText = document.createTextNode("Reset Playlist");
+
+        resetButton.id = "reset";
+        resetButton.ariaLabel = "Reset playlist";
+        resetButton.appendChild(resetText);
+        playlistSongs.appendChild(resetButton);
+
+        resetButton.addEventListener("click", () => {
+            userData.songs = [...allSongs];
+            renderSongs(sortSongs());
+            setPlayButtonAccessibleText();
+            resetButton.remove();
+        })
+    }
 }
 
 // function to display the song details in the player
@@ -256,6 +273,24 @@ previousButton.addEventListener("click", playPreviousSong);
 
 // add event listener to shuffle the playlist
 shuffleButton.addEventListener("click", shuffle);
+
+// add event listener to audio element so next song can be played when the current song ends
+audio.addEventListener("ended", () => {
+    const currentSongIndex = getCurrentSongIndex();
+    const nextSongExists = currentSongIndex < userData.songs.length - 1;
+
+    if (nextSongExists) {
+        playNextSong();
+    } else {
+        userData.currentSong = null;
+        userData.songCurrentTime = 0;
+
+        pauseSong();
+        setPlayerDisplay();
+        highlightCurrentSong();
+        setPlayButtonAccessibleText();
+    }
+});
 
 // function to sort songs
 const sortSongs = () => {

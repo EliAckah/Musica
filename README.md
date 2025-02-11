@@ -28,7 +28,7 @@ Musica is a simple music player built with vanilla JavaScript. It allows users t
 2. Click **Play** to start playing the first song.
 3. Use **Next** (⏭️) or **Previous** (⏮️) to switch songs.
 4. Click **Shuffle** to randomize the playlist.
-5. Remove a song by clicking the delete button (🗑️).
+5. Remove a song by clicking the delete button (X).
 6. If needed, restore the original playlist by clicking **Reset Playlist**.
 
 ## Technologies Used
